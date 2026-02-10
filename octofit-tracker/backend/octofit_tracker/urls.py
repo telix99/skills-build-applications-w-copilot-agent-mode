@@ -37,9 +37,13 @@ def api_root(request):
         'workouts': request.build_absolute_uri('workouts/'),
     })
 
+import os
+CODESPACE_NAME = os.environ.get('CODESPACE_NAME', 'localhost')
+BASE_URL = f"https://{CODESPACE_NAME}-8000.app.github.dev"
+
 urlpatterns = [
-    path('', api_root, name='api_root'),
-    path('', include(router.urls)),
+    path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
 ]
 """octofit_tracker URL Configuration
 
