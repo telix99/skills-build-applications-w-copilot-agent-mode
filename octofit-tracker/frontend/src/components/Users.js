@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { API_ENDPOINTS } from '../config/api';
+
+// API Endpoint: https://{CODESPACE_NAME}-8000.app.github.dev/api/users/
 
 const Users = () => {
   const [users, setUsers] = useState([]);
@@ -8,11 +11,7 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const codespaceUrl = process.env.REACT_APP_CODESPACE_NAME
-          ? `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev`
-          : 'http://localhost:8000';
-        
-        const apiUrl = `${codespaceUrl}/api/users/`;
+        const apiUrl = API_ENDPOINTS.USERS;
         console.log('Fetching from Users API:', apiUrl);
         
         const response = await fetch(apiUrl);

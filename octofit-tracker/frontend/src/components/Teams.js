@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { API_ENDPOINTS } from '../config/api';
+
+// API Endpoint: https://{CODESPACE_NAME}-8000.app.github.dev/api/teams/
 
 const Teams = () => {
   const [teams, setTeams] = useState([]);
@@ -8,11 +11,7 @@ const Teams = () => {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const codespaceUrl = process.env.REACT_APP_CODESPACE_NAME
-          ? `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev`
-          : 'http://localhost:8000';
-        
-        const apiUrl = `${codespaceUrl}/api/teams/`;
+        const apiUrl = API_ENDPOINTS.TEAMS;
         console.log('Fetching from Teams API:', apiUrl);
         
         const response = await fetch(apiUrl);
