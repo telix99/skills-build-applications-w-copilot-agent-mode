@@ -5,12 +5,10 @@ class Command(BaseCommand):
     help = 'Populate the octofit_db database with test data'
 
     def handle(self, *args, **options):
-        # Clear existing data
-        User.objects.all().delete()
-        Team.objects.all().delete()
-        Activity.objects.all().delete()
-        Leaderboard.objects.all().delete()
-        Workout.objects.all().delete()
+        # Check if data already exists
+        if User.objects.exists():
+            self.stdout.write(self.style.WARNING('Database already populated.'))
+            return
 
         # Create teams
         marvel = Team.objects.create(name='marvel', description='Marvel superheroes')

@@ -17,19 +17,19 @@ class Team(models.Model):
 
 class Activity(models.Model):
     id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     type = models.CharField(max_length=50)
     duration = models.IntegerField()
     date = models.DateField()
     def __str__(self):
-        return f"{self.user.name} - {self.type}"
+        return f"{self.user.name if self.user else 'Unknown'} - {self.type}"
 
 class Leaderboard(models.Model):
     id = models.AutoField(primary_key=True)
-    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, blank=True)
     points = models.IntegerField()
     def __str__(self):
-        return f"{self.team.name} - {self.points}"
+        return f"{self.team.name if self.team else 'Unknown'} - {self.points}"
 
 class Workout(models.Model):
     id = models.AutoField(primary_key=True)
