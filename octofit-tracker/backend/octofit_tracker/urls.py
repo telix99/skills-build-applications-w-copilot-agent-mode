@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic import RedirectView
 from rest_framework import routers
 from .views import UserViewSet, TeamViewSet, ActivityViewSet, LeaderboardViewSet, WorkoutViewSet
 from rest_framework.response import Response
@@ -30,6 +31,7 @@ router.register(r'workouts', WorkoutViewSet)
 @api_view(['GET'])
 def api_root(request):
     return Response({
+        'message': 'Welcome to OctoFit Tracker API',
         'users': request.build_absolute_uri('/api/users/'),
         'teams': request.build_absolute_uri('/api/teams/'),
         'activities': request.build_absolute_uri('/api/activities/'),
@@ -43,6 +45,7 @@ if os.environ.get('CODESPACE_NAME'):
     ALLOWED_HOSTS.append(f"{os.environ.get('CODESPACE_NAME')}-8000.app.github.dev")
 
 urlpatterns = [
+    path('', RedirectView.as_view(url='api/', permanent=False), name='home'),
     path('admin/', admin.site.urls),
     path('api/', api_root, name='api-root'),
     path('api/', include(router.urls)),
